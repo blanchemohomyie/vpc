@@ -1,4 +1,5 @@
 #1. Front end asg
+# Create a front end autoscaling group with a launch template
 resource "aws_launch_template" "frontend-temp" {
   name_prefix   = "front-end"
   image_id      = "ami-013f17f36f8b1fefb"
@@ -7,7 +8,7 @@ resource "aws_launch_template" "frontend-temp" {
 
 resource "aws_autoscaling_group" "front-asg" {
   availability_zones = ["us-east-1a", "us-east-1b"]
-  desired_capacity   = 2
+  desired_capacity   = 1
   max_size           = 4
   min_size           = 1
 
@@ -23,7 +24,7 @@ resource "aws_autoscaling_attachment" "front_attachment" {
   elb                    = aws_elb.publiclb.id
 }
 
-#2. Back-end asg
+# Create avBack-end autoscaling group with a launch template.
 resource "aws_launch_template" "backend-temp" {
   name_prefix   = "back-end"
   image_id      = "ami-013f17f36f8b1fefb"
@@ -32,7 +33,7 @@ resource "aws_launch_template" "backend-temp" {
 
 resource "aws_autoscaling_group" "back-asg" {
   availability_zones = ["us-east-1a", "us-east-1b"]
-  desired_capacity   = 2
+  desired_capacity   = 1
   max_size           = 4
   min_size           = 1
 
