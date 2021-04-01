@@ -21,10 +21,9 @@ resource "aws_autoscaling_group" "front-asg" {
 # Create a new load balancer attachment
 resource "aws_autoscaling_attachment" "front_attachment" {
   autoscaling_group_name = aws_autoscaling_group.front-asg.id
-  elb                    = aws_elb.publiclb.id
 }
 
-# Create avBack-end autoscaling group with a launch template.
+# Create a Back-end autoscaling group with a launch template.
 resource "aws_launch_template" "backend-temp" {
   name_prefix   = "back-end"
   image_id      = "ami-013f17f36f8b1fefb"
@@ -46,6 +45,5 @@ resource "aws_autoscaling_group" "back-asg" {
 # Create a new load balancer attachment
 resource "aws_autoscaling_attachment" "back_attachment" {
   autoscaling_group_name = aws_autoscaling_group.back-asg.id
-  elb                    = aws_elb.publiclb.id
 }
 
