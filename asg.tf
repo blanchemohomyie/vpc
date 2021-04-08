@@ -4,13 +4,15 @@ resource "aws_launch_template" "frontend-temp" {
   name_prefix   = "front-end"
   image_id      = "ami-013f17f36f8b1fefb"
   instance_type = "t2.micro"
+  key_name      = "k8-key"
 }
 
 resource "aws_autoscaling_group" "front-asg" {
-  availability_zones = ["us-east-1a", "us-east-1b"]
-  desired_capacity   = 1
+  #availability_zones = ["us-east-1a", "us-east-1b"]
+  desired_capacity   = 3
   max_size           = 4
   min_size           = 1
+  vpc_zone_identifier = [aws_subnet.pub1.id, aws_subnet.pub2.id]
 
   launch_template {
     id      = aws_launch_template.frontend-temp.id
@@ -28,13 +30,15 @@ resource "aws_launch_template" "backend-temp" {
   name_prefix   = "back-end"
   image_id      = "ami-013f17f36f8b1fefb"
   instance_type = "t2.micro"
+  key_name      = "k8-key"
 }
 
 resource "aws_autoscaling_group" "back-asg" {
-  availability_zones = ["us-east-1a", "us-east-1b"]
-  desired_capacity   = 1
+  #availability_zones = ["us-east-1a", "us-east-1b"]
+  desired_capacity   = 3
   max_size           = 4
   min_size           = 1
+  vpc_zone_identifier = [aws_subnet.pri3.id, aws_subnet.pri4.id]
 
   launch_template {
     id      = aws_launch_template.backend-temp.id

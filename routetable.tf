@@ -23,7 +23,7 @@ resource "aws_route_table" "pri" {
 }
 
 resource "aws_route_table_association" "b" {
-    subnet_id      = aws_subnet.pri3.id
+    subnet_id      = aws_subnet.pri4.id
     route_table_id = aws_route_table.pri.id
 }
 
