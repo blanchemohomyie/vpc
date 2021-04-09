@@ -7,7 +7,7 @@ resource "aws_network_interface" "nic" {
 
   /*attachment {
     instance     = aws_instance.bastion.id
-    device_index = 0
+    device_index = 1
   }*/
 }
 
