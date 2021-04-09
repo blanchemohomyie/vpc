@@ -9,7 +9,7 @@ resource "aws_launch_template" "frontend-temp" {
 
 resource "aws_autoscaling_group" "front-asg" {
   #availability_zones = ["us-east-1a", "us-east-1b"]
-  desired_capacity   = 4
+  desired_capacity   = 2
   max_size           = 4
   min_size           = 1
   vpc_zone_identifier = [aws_subnet.pub1.id, aws_subnet.pub2.id]
