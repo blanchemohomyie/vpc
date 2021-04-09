@@ -20,7 +20,7 @@ resource "aws_security_group" "int_sg" {
   }
 
   tags = {
-    Name = "allow_all"
+    Name = "int-sg"
   }
 }
 
@@ -55,8 +55,36 @@ resource "aws_security_group" "ext_sg" {
   }
 
   tags = {
-    Name = "allow_all"
+    Name = "ext-sg"
   }
 }
+
+# Create a bastion security group
+resource "aws_security_group" "bastion_sg" {
+  name        = "bastion_sg"
+  description = "Allow ssh inbound traffic"
+  vpc_id      = aws_vpc.myvpc.id
+
+  ingress {
+    description = "All ssh traffic VPC"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "bastion_sg"
+  }
+}
+
+
 
 

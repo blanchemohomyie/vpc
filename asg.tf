@@ -9,11 +9,11 @@ resource "aws_launch_template" "frontend-temp" {
 
 resource "aws_autoscaling_group" "front-asg" {
   #availability_zones = ["us-east-1a", "us-east-1b"]
-  desired_capacity   = 3
+  desired_capacity   = 4
   max_size           = 4
   min_size           = 1
   vpc_zone_identifier = [aws_subnet.pub1.id, aws_subnet.pub2.id]
-
+  health_check_type   = "ELB"
   launch_template {
     id      = aws_launch_template.frontend-temp.id
     version = "$Latest"
@@ -23,6 +23,7 @@ resource "aws_autoscaling_group" "front-asg" {
 # Create a new load balancer attachment
 resource "aws_autoscaling_attachment" "front_attachment" {
   autoscaling_group_name = aws_autoscaling_group.front-asg.id
+  elb                    = aws_elb.publiclb.id
 }
 
 # Create a Back-end autoscaling group with a launch template.
@@ -35,11 +36,11 @@ resource "aws_launch_template" "backend-temp" {
 
 resource "aws_autoscaling_group" "back-asg" {
   #availability_zones = ["us-east-1a", "us-east-1b"]
-  desired_capacity   = 3
+  desired_capacity   = 1
   max_size           = 4
   min_size           = 1
   vpc_zone_identifier = [aws_subnet.pri3.id, aws_subnet.pri4.id]
-
+  health_check_type   = "ELB"
   launch_template {
     id      = aws_launch_template.backend-temp.id
     version = "$Latest"
@@ -49,5 +50,6 @@ resource "aws_autoscaling_group" "back-asg" {
 # Create a new load balancer attachment
 resource "aws_autoscaling_attachment" "back_attachment" {
   autoscaling_group_name = aws_autoscaling_group.back-asg.id
+  elb                    = aws_elb.privatelb.id
 }
 
