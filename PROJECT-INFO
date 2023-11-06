@@ -12,3 +12,4 @@ Building a 3-tier-infrastructure in AWS USING TERRAFORM
 #10. Create auto scaling attachment to respective load balancers
 #11. Create security groups; internal and external to be associated with the load balancers.
 #12. Create a bastion host and place it in the public subnet, to act as an entry point into the infrastrucure.
+#13. 
